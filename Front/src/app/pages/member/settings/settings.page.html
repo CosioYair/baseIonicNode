@@ -1,0 +1,18 @@
+<ion-header>
+  <app-header>
+    <ion-back-button backButton defaultHref="occ"></ion-back-button>
+  </app-header>
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="form">
+    <div>
+      <ion-item>
+        <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].fingerprint.enableFingerprint }}</ion-label>
+        <ion-checkbox color="primary" formControlName="fingerprint"></ion-checkbox>
+      </ion-item>
+    </div>
+    <ion-button expand="block" shape="round" type="submit" (click)="updateSettings()">
+      {{ languageConfig[(getAppLanguage$ | async).Code].buttons.saveContinue }}
+    </ion-button>
+  </form>
+</ion-content>

@@ -1,0 +1,20 @@
+<ion-header>
+  <app-header>
+    <ion-back-button backButton defaultHref="occ"></ion-back-button>
+  </app-header>
+</ion-header>
+<ion-content padding>
+  <ion-router-outlet></ion-router-outlet>
+  <ion-tabs class="pt-10">
+    <ion-tab-bar slot="bottom">
+
+      <ion-tab-button tab="contact">
+        <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].common.contact }}</ion-label>
+        <ion-icon name="person"></ion-icon>
+        <ion-badge *ngIf="processesFinished[0]">✓</ion-badge>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+
+  </ion-tabs>
+</ion-content>

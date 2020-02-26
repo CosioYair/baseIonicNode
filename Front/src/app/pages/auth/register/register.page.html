@@ -1,0 +1,70 @@
+<ion-header>
+  <app-header>
+    <ion-back-button backButton defaultHref="auth"></ion-back-button>
+  </app-header>
+</ion-header>
+<ion-content class="padding-content-0 primary-color-items">
+  <ion-grid class="h-100 ion-grid-100">
+    <ion-row class="h-100 bgPeople" justify-content-center align-items-center>
+      <ion-col size-xs="12" size-sm="8" size-md="6" size-lg="4">
+        <ion-row text-center>
+          <ion-col>
+            <form [formGroup]="form">
+              <div>
+                <ion-item>
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.email }}</ion-label>
+                  <ion-input type="text" formControlName="Email"></ion-input>
+                </ion-item>
+                <div *ngIf="form.controls['Email'].invalid && form.controls['Email'].touched"
+                  class="invalid-feedback">
+                  <div *ngIf="form.get('Email').errors.required">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                  <div *ngIf="form.get('Email').errors.pattern">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.format }}
+                  </div>
+                </div>
+              </div>
+              <div>
+                <ion-item>
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.password }}</ion-label>
+                  <ion-input type="password" formControlName="Password"></ion-input>
+                </ion-item>
+                <div *ngIf="form.controls['Password'].invalid && form.controls['Password'].touched"
+                  class="invalid-feedback">
+                  <div *ngIf="form.get('Password').errors.required">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                  <div *ngIf="form.get('Password').errors.minlength">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.length + ' ' + languageConfig[(getAppLanguage$ | async).Code].common.atLeast + ' 6 ' +  languageConfig[(getAppLanguage$ | async).Code].common.characters }}
+                  </div>
+                </div>
+              </div>
+              <div>
+                <ion-item>
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.passwordConfirm }}</ion-label>
+                  <ion-input type="password" formControlName="confirmarPassword"></ion-input>
+                </ion-item>
+                <div
+                  *ngIf="form.controls['confirmarPassword'].invalid && form.controls['confirmarPassword'].touched"
+                  class="invalid-feedback">
+                  <div *ngIf="form.get('confirmarPassword').errors.required">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                  <div *ngIf="form.get('confirmarPassword').errors.mustMatch">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.passwordMatch }}</div>
+                </div>
+                <app-alert [alertOptions]="alertOptions"></app-alert>
+              </div>
+              <div text-center padding>
+                <ion-checkbox formControlName="TerminosOcc"></ion-checkbox>
+                <ion-label padding-start>{{ languageConfig[(getAppLanguage$ | async).Code].common.acceptTerms }}
+                </ion-label>
+              </div>
+              <ion-button expand="block" type="submit" [disabled]="!form.valid" (click)="signup()">
+                {{ languageConfig[(getAppLanguage$ | async).Code].common.signup }}
+              </ion-button>
+            </form>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

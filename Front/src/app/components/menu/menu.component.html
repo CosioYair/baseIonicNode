@@ -1,0 +1,38 @@
+<ion-menu side="end" menuId="principalMenu" contentId="principalMenu">
+  <ion-header>
+    <ion-toolbar class="ion-padding-start" color="primary">
+      <ion-thumbnail *ngIf="(getUser$ | async).Oid" slot="start">
+        <ion-img [src]="userProfileImg.Source + '?rnd=' + random"></ion-img>
+      </ion-thumbnail>
+      <ion-label padding>{{ (getUser$ | async).Name }}</ion-label>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item routerLink="/home" (click)="menuToggle()">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].menu.home }}</ion-label>
+      </ion-item>
+      <div *ngIf="!(getUser$ | async).Oid">
+        <ion-item routerLink="/auth/login" (click)="menuToggle()">
+          <ion-icon name="log-in"></ion-icon>
+          <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].common.login }}</ion-label>
+        </ion-item>
+      </div>
+      <div *ngIf="(getUser$ | async).Oid">
+        <ion-item routerLink="/member/profile" (click)="menuToggle()">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].menu.profile }}</ion-label>
+        </ion-item>
+        <ion-item routerLink="/member/settings" (click)="menuToggle()">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].menu.settings }}</ion-label>
+        </ion-item>
+        <ion-item routerLink="/auth/login" (click)="logout()">
+          <ion-icon name="log-out"></ion-icon>
+          <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].common.logout }}</ion-label>
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-menu>

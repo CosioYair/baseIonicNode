@@ -1,0 +1,95 @@
+<ion-header>
+  <app-header>
+    <ion-back-button backButton defaultHref="home"></ion-back-button>
+  </app-header>
+</ion-header>
+<ion-content class="padding-content-0 primary-color-items">
+  <ion-grid class="h-100 ion-grid-100">
+    <ion-row padding justify-content-center>
+      <ion-col padding size-xs="8" size-sm="6" size-md="4" size-lg="3">
+        <ion-img src="assets/img/rscLogin.png"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row class="h-100 bgPeople" justify-content-center align-items-center>
+      <ion-col size-xs="12" size-sm="8" size-md="6" size-lg="4">
+        <ion-row text-center>
+          <ion-col>
+            <form [formGroup]="form">
+              <div>
+                <ion-item>
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.email }}</ion-label>
+                  <ion-input type="text" formControlName="Email"></ion-input>
+                </ion-item>
+                <div *ngIf="form.controls['Email'].invalid && form.controls['Email'].touched"
+                  class="invalid-feedback">
+                  <div *ngIf="form.get('Email').errors.required">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                  <div *ngIf="form.get('Email').errors.pattern">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.format }}
+                  </div>
+                </div>
+              </div>
+              <div>
+                <ion-item>
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.password }}</ion-label>
+                  <ion-input type="password" formControlName="Password"></ion-input>
+                </ion-item>
+                <div *ngIf="form.controls['Password'].invalid && form.controls['Password'].touched"
+                  class="invalid-feedback">
+                  <div *ngIf="form.get('Password').errors.required">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                  <div *ngIf="form.get('Password').errors.minlength">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.length + ' ' + languageConfig[(getAppLanguage$ | async).Code].common.atLeast + ' 6 ' +  languageConfig[(getAppLanguage$ | async).Code].common.characters }}
+                  </div>
+                </div>
+              </div>
+              <app-alert [alertOptions]="alertOptions"></app-alert>
+              <ion-button expand="block" type="submit" [disabled]="!form.valid" (click)="login()">
+                {{ languageConfig[(getAppLanguage$ | async).Code].common.login }}
+              </ion-button>
+            </form>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="6">
+            <ion-button *ngIf="platform.is('cordova')" color="facebook" expand="block" icon-left
+              (click)="signInWithFacebook()">
+              <ion-icon name="logo-facebook"></ion-icon>
+              {{ languageConfig[(getAppLanguage$ | async).Code].common.facebookLogin }}
+            </ion-button>
+            <ion-button *ngIf="!platform.is('cordova')" color="facebook" expand="block" icon-left>
+              <a href="http://localhost:3000/api/auth/facebook?roleId=1&returnTo=http://localhost:4200/auth">
+                <ion-icon name="logo-facebook"></ion-icon>
+                {{ languageConfig[(getAppLanguage$ | async).Code].common.facebookLogin }}
+              </a>
+            </ion-button>
+          </ion-col>
+          <ion-col size-xs="12" size-sm="6">
+            <ion-button *ngIf="platform.is('cordova')" color="google" expand="block" icon-left
+              (click)="signInWithGoogle()">
+              <ion-icon name="logo-google"></ion-icon>
+              {{ languageConfig[(getAppLanguage$ | async).Code].common.gmailLogin }}
+            </ion-button>
+            <ion-button *ngIf="!platform.is('cordova')" color="google" expand="block" icon-left>
+              <a href="http://localhost:3000/api/auth/google?roleId=1&returnTo=http://localhost:4200/auth">
+                <ion-icon name="logo-google"></ion-icon>
+                {{ languageConfig[(getAppLanguage$ | async).Code].common.gmailLogin }}
+              </a>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row text-center>
+          <ion-col size-xs="12" size-sm="6">
+            <ion-button class="bold small-font" routerLink="/auth/register" fill="clear">
+              {{ languageConfig[(getAppLanguage$ | async).Code].common.register }}
+            </ion-button>
+          </ion-col>
+          <ion-col size-xs="12" size-sm="6">
+            <ion-button class="bold small-font" routerLink="/auth/new-password" fill="clear">
+              {{ languageConfig[(getAppLanguage$ | async).Code].common.forgotPassword }}</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

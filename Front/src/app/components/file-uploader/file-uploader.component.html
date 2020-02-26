@@ -1,0 +1,7 @@
+<ion-button *ngIf="isCordova" shape="round" type="button" (click)="uploadNativeFile()">
+  {{ options.ButtonText }}
+</ion-button>
+<ion-button *ngIf="!isCordova" shape="round" type="button" (click)="fileInput.click()">
+  {{ options.ButtonText }}
+</ion-button>
+<input type="file" style="display: none;" (change)="onFileChanged($event)" #fileInput>

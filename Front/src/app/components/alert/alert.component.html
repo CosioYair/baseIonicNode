@@ -1,0 +1,4 @@
+<ion-chip *ngIf="alertOptions.Status" [color]="alertOptions.Type">
+  <ion-label [color]="alertOptions.TextColor">{{ alertOptions.Message }}</ion-label>
+  <ion-icon *ngIf="alertOptions.Close !== false" name="close" (click)="close()"></ion-icon>
+</ion-chip>

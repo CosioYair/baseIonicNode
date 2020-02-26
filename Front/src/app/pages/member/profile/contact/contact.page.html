@@ -1,0 +1,169 @@
+<ion-content padding>
+  <ion-grid class="h-100" fixed>
+    <ion-row class="h-100" justify-content-center align-items-center>
+      <ion-col size-xs="12" size-sm="8" size-md="6" size-lg="5">
+        <ion-row>
+          <ion-col>
+            <form [formGroup]="form">
+              <div>
+                <ion-item>
+                  <ion-label position="floating">{{ languageConfig[(getAppLanguage$ | async).Code].inputs.name }}
+                  </ion-label>
+                  <ion-input type="text" formControlName="Name"></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['Name'].invalid && mainForm['Name'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['Name'].errors.required || mainForm['Name'].errors.empty">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                  <div *ngIf="mainForm['Name'].errors.pattern">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.format }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item>
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.gender }}</ion-label>
+                  <ion-select okText="Ok" cancelText="Cancel" formControlName="Gender">
+                    <ion-select-option *ngFor="let gender of genders" [value]="gender.Id">
+                      {{ gender.DisplayText }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+              <div>
+                <ion-item>
+                  <ion-label position="floating">{{ languageConfig[(getAppLanguage$ | async).Code].inputs.phone }}
+                  </ion-label>
+                  <ion-input type="tel" min="0" formControlName="Phone" maxLength="10"></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['Phone'].invalid && mainForm['Phone'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['Phone'].errors.required">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                  <div *ngIf="mainForm['Phone'].errors.maxlength">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.length + ' ' + languageConfig[(getAppLanguage$ | async).Code].common.atLeast + ' 10 ' +  languageConfig[(getAppLanguage$ | async).Code].common.characters }}
+                  </div>
+                  <div *ngIf="mainForm['Phone'].errors.minlength">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.length + ' ' + languageConfig[(getAppLanguage$ | async).Code].common.atLeast + ' 10 ' +  languageConfig[(getAppLanguage$ | async).Code].common.characters }}
+                  </div>
+                  <div *ngIf="mainForm['Phone'].errors.pattern">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.format }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item>
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.birthdate }}</ion-label>
+                  <ion-input formControlName="Birthdate" [liIonic4Datepicker]="datePickerObj"></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['Birthdate'].invalid && mainForm['Birthdate'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['Birthdate'].errors.required">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item class="shdow-dom-padding-start-0">
+                  <input type="text" class="ion-input-class" ngx-google-places-autocomplete #placesRef="ngx-places"
+                    (onAddressChange)="handleAddressChange($event)">
+                </ion-item>
+                <app-alert [alertOptions]="alertOptionsDomicile"></app-alert>
+              </div>
+              <div>
+                <ion-item class="op-04">
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.country }}</ion-label>
+                  <ion-input type="text" formControlName="Country" readonly></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['Country'].invalid && mainForm['Country'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['Country'].errors.required || mainForm['Country'].errors.empty">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item class="op-04">
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.state }}</ion-label>
+                  <ion-input type="text" formControlName="State" readonly></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['State'].invalid && mainForm['State'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['State'].errors.required || mainForm['State'].errors.empty">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item class="op-04">
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.city }}</ion-label>
+                  <ion-input type="text" formControlName="Town" readonly></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['Town'].invalid && mainForm['Town'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['Town'].errors.required || mainForm['Town'].errors.empty">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item class="op-04">
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.zipCode }}</ion-label>
+                  <ion-input type="text" formControlName="PostalCode" readonly></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['PostalCode'].invalid && mainForm['PostalCode'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['PostalCode'].errors.required || mainForm['PostalCode'].errors.empty">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item class="op-04">
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.suburb }}</ion-label>
+                  <ion-input type="text" formControlName="Suburb" readonly></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['Suburb'].invalid && mainForm['Suburb'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['Suburb'].errors.required || mainForm['Suburb'].errors.empty">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item class="op-04">
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.street }}</ion-label>
+                  <ion-input type="text" formControlName="Street" readonly></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['Street'].invalid && mainForm['Street'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['Street'].errors.required || mainForm['Street'].errors.empty">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item class="op-04">
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.numExt }}</ion-label>
+                  <ion-input type="text" formControlName="NumExt" readonly></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['NumExt'].invalid && mainForm['NumExt'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['NumExt'].errors.required || mainForm['NumExt'].errors.empty">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item>
+                  <ion-label>{{ languageConfig[(getAppLanguage$ | async).Code].inputs.numInt }}</ion-label>
+                  <ion-input type="text" formControlName="NumInt" maxLength="6"></ion-input>
+                </ion-item>
+                <div *ngIf="mainForm['NumInt'].invalid && mainForm['NumInt'].touched" class="invalid-feedback">
+                  <div *ngIf="mainForm['NumInt'].errors.required || mainForm['NumInt'].errors.empty">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.required }}</div>
+                  <div *ngIf="mainForm['NumInt'].errors.maxlength">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.length + ' ' + languageConfig[(getAppLanguage$ | async).Code].common.atLeast + ' 6 ' +  languageConfig[(getAppLanguage$ | async).Code].common.characters }}
+                  </div>
+                  <div *ngIf="mainForm['NumInt'].errors.pattern">
+                    {{ languageConfig[(getAppLanguage$ | async).Code].inputs.errors.format }}</div>
+                </div>
+              </div>
+              <div>
+                <ion-item>
+                  <ion-thumbnail slot="start">
+                    <ion-img [src]="userProfileImg.Source + '?rnd=' + random"></ion-img>
+                  </ion-thumbnail>
+                  <app-file-uploader [options]="uploaderOptions" [fileType]="'4'">
+                  </app-file-uploader>
+                </ion-item>
+              </div>
+              <ion-button expand="block" shape="round" type="submit" [disabled]="!form.valid" (click)="updateProfile()">
+                {{ languageConfig[(getAppLanguage$ | async).Code].buttons.saveContinue }}
+              </ion-button>
+            </form>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

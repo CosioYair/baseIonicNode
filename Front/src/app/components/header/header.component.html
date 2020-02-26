@@ -1,0 +1,47 @@
+<ion-toolbar class="padding-content-0" color="secondary">
+  <ion-buttons slot="start">
+    <ng-content select="[backButton]"></ng-content>
+    <ion-button class="visible-sm" size="small" routerLink="/home">
+      <ion-img src="assets/img/rscLogoApp.png"></ion-img>
+    </ion-button>
+    <ion-button class="hidden-sm" size="small" routerLink="/home">
+      <ion-img src="assets/img/rscLogoWeb.png"></ion-img>
+    </ion-button>
+    <ng-content select="[start]"></ng-content>
+  </ion-buttons>
+  <ion-grid>
+    <ion-row class="hidden-sm">
+      <ion-col size="auto">
+        <ion-button size="small" expand="block" fill="clear" routerLink="/home">
+          {{ languageConfig[(getAppLanguage$ | async).Code].menu.home }}
+        </ion-button>
+      </ion-col>
+      <ion-col size="auto" *ngIf="(getUser$ | async).Oid">
+        <ion-button size="small" expand="block" fill="clear" routerLink="/member/profile">
+          {{ languageConfig[(getAppLanguage$ | async).Code].menu.profile }}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-buttons slot="end">
+    <ng-content select="[end]"></ng-content>
+    <ion-select *ngIf="(getLanguages$ | async).length > 0" okText="Ok" cancelText="Cancel" [value]="(getAppLanguage$ | async).Id" (ionChange)="setAppLanguage($event)" placeholder="Language">
+      <ion-select-option *ngFor="let language of (getLanguages$ | async)" [value]="language.Id">
+        {{ language.DisplayText }}</ion-select-option>
+    </ion-select>
+    <div class="visible-sm">
+      <app-menu-button menuId="principalMenu" icon="more"></app-menu-button>
+    </div>
+    <div class="hidden-sm">
+      <ion-button *ngIf="!(getUser$ | async).Oid" fill="clear" routerLink="/auth/login">
+        <ion-icon name="log-in"></ion-icon>
+        {{ languageConfig[(getAppLanguage$ | async).Code].common.login }}
+      </ion-button>
+      <ion-button *ngIf="(getUser$ | async).Oid" fill="clear" routerLink="/auth/login" (click)="logout()">
+        <ion-img [src]="(getUser$ | async).Picture + '?rnd=' + random"></ion-img>
+        {{ languageConfig[(getAppLanguage$ | async).Code].common.logout }}
+        <ion-label padding></ion-label>
+      </ion-button>
+    </div>
+  </ion-buttons>
+</ion-toolbar>
